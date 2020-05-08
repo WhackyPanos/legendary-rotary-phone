@@ -1,2 +1,4 @@
 print('Hello world!')
-pnaos = 'gay'
+panos = 'gay'
+
+print("pano eisai" + panos)
