@@ -31,4 +31,5 @@ agrmnt_percent = ((r - agrmnt)/r)*100
 if agrmnt == r:
     print("Finished successfully")
 else:
+
     print("Do again the survey and then run again the program because we had ", round(agrmnt_percent,1),"% agreement", sep='')
