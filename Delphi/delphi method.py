@@ -1,34 +1,40 @@
 import pandas as pd
 
-data = pd.read_excel (r'C:\Users\Hristos Birbou\PycharmProjects\legendary-rotary-phone\Delphi\data.xlsx',index_col=0)
+oldanswrs = ["nothing old yet"]
+answrs = []
+diafora = []
+agrmnt = False
 
-r, c = data.shape
-agrmnt = 0
+while agrmnt == False:
 
-for i in range(r):
+    data = pd.read_excel(r'C:\Users\Hristos Birbou\PycharmProjects\legendary-rotary-phone\Delphi\data.xlsx', index_col=0)
 
-    votes = 0
-    print("er", i+1, ':', sep='')
+    r, c = data.shape
 
-    for j in range(c):
-        #print("user",j+1,": ",data.iloc[i, j], sep='')
-        votes += int(data.iloc[i,j])
-    print("the positive votes are:", votes)
 
-    mo = votes / c
-    percent = (1 - mo)/1
-    print(percent)
+    for i in range(r):
+        temp = 0
+        print("-------er", i+1, "-------", sep='')
 
-    if mo == 1 or mo == 0:
-        print("We have consensus")
-        agrmnt += 1
+        for j in range(c):
+            print('user', j+1, ': ', data.iloc[i, j], sep='')
+            temp += data.iloc[i, j]
 
-    elif percent > 0.8 or percent < 0.2 :
-        print("getting there")
-        agrmnt += 1
+        motemp = temp / c
+        answrs.append(motemp)
 
-agrmnt_percent = ((r - agrmnt)/r)*100
-if agrmnt == r:
-    print("Finished successfully")
-else:
-    print("Do again the survey and then run again the program because we had ", round(agrmnt_percent,1),"% agreement", sep='')
+        if oldanswrs[0] != "nothing old yet":
+            diafora.append(oldanswrs[i] - answrs[i])
+
+
+    print(len(answrs), answrs, oldanswrs)
+    print(diafora)
+    oldanswrs.clear()
+    oldanswrs = answrs.copy()
+    answrs.clear()
+    diafora.clear()
+
+    apantisi = input('ok?')
+
+    if apantisi == 'ok':
+        agrmnt = True
