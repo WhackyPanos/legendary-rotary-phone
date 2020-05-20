@@ -1,28 +1,38 @@
 import pandas as pd
-import os
 
+# List initiation
 oldanswrs = ["nothing old yet"]
 answrs = []
 pinakas_diaforon = ['There is no diversity yet']
+
+# Agreement check, if it's True the main loop stops.
 agrmnt = False
 
+# Main loop. This loop checks the data between rounds, if the data is similar the loop stops.
 while agrmnt == False:
 
+    # Importing the excel file.
     data = pd.read_excel(r'C:\Users\Hristos Birbou\PycharmProjects\legendary-rotary-phone\Delphi\data.xlsx', index_col=0)
 
+    # Reading the rows an columns (determines how many questions and  how many participants we have).
     r, c = data.shape
+
+    # Init of some variables.
     diafora = 0
     sumfonia = 0
 
-
+    # Analyzing data.
     for i in range(r):
         temp = 0
+        # Print the current question.
         print("-------er", i+1, "-------", sep='')
 
         for j in range(c):
+            # Print the answer of each user for the specific question.
             print('user', j+1, ': ', data.iloc[i, j], sep='')
             temp += data.iloc[i, j]
 
+        # Average of the answers.
         motemp = temp / c
         answrs.append(motemp)
 
@@ -34,7 +44,6 @@ while agrmnt == False:
                 sumfonia += 1
 
 
-    #print(len(answrs), answrs, oldanswrs)
     print('----------ANSWERS----------')
     print('-The answers from this round are:', answrs)
     print('-The answers from the previous round are:', oldanswrs)
