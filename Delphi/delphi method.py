@@ -1,6 +1,6 @@
 import pandas as pd
 
-data = pd.read_excel (r'C:\Users\Hristos Birbou\PycharmProjects\legendary-rotary-phone\Delphi\data.xlsx',index_col=0)
+data = pd.read_excel (r'data.xlsx',index_col=0)
 
 r, c = data.shape
 agrmnt = 0

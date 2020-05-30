@@ -1,12 +1,13 @@
 {
 
   "criteria": 3,
+  "alternatives": 3,
 
   "Alt1": [
     {
       "cost":2200,
       "reliability":1,
-      "time":60,
+      "time":60
     }
   ],
 
@@ -32,15 +33,7 @@
       "reliability": 40,
       "time": 10
     }
-  ],
-
-  "rank": [
-      {
-        "cost": 1,
-        "reliability": 2,
-        "time": 3
-      }
-    ]
+  ]
 
 
 }
