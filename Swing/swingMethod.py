@@ -79,3 +79,5 @@ timestampStr = dateTimeObj.strftime("%d-%m-%Y_%H:%M:%S")
 
 # Save to png
 plt.savefig('plot_' + timestampStr + '.png',bbox_inches='tight')
+print(pd.DataFrame(Weight,Criteria))
+pd.DataFrame(Weight,Criteria).to_excel("output_" + timestampStr + '.xlsx', header=False)

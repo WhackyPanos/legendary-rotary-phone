@@ -66,14 +66,24 @@ while agrmnt == False:
 
 print("--------------------The weights are--------------------")
 
+
+# Normalize weights
+total = 0
+for item in oldanswrs:
+    total += item
+
+Weights=[]
+for item in oldanswrs:
+    Weights.append(item/total)
+
 for i in range(r):
-    print('Er', i, ': ', round(oldanswrs[i], 2), sep='')
+    print('Er', i, ': ', round(Weights[i], 2), sep='')
 
 
 # Plot results
 fig = plt.figure()
 ax = fig.add_axes([0,0,1,1])
-ax.barh(Alts,oldanswrs)
+ax.barh(Alts,Weights)
 ax.set_ylabel('Criteria')
 ax.set_xlabel('Weights')
 
@@ -83,3 +93,6 @@ timestampStr = dateTimeObj.strftime("%d-%m-%Y_%H:%M:%S")
 
 # Save to png
 plt.savefig('plot_' + timestampStr + '.png',bbox_inches='tight')
+
+#Save to excel
+pd.DataFrame(Weights,Alts).to_excel("output_" + timestampStr + '.xlsx', header=False)

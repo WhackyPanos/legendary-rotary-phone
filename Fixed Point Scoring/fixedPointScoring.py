@@ -1,5 +1,4 @@
 import pandas as pd
-import xlwt
 import matplotlib.pyplot as plt
 from datetime import datetime
 
@@ -20,10 +19,6 @@ Weight = []
 for point in Points:
     Weight.append(point / total)
 
-# TODO make it more pretty
-print(Alts)
-print(Weight)
-
 # Plot results
 fig = plt.figure()
 ax = fig.add_axes([0,0,1,1])
@@ -38,11 +33,6 @@ timestampStr = dateTimeObj.strftime("%d-%m-%Y_%H:%M:%S")
 # Save to png
 plt.savefig('plot_' + timestampStr + '.png',bbox_inches='tight')
 
-# Save weights to Excel
-wb = xlwt.Workbook()
-ws = wb.add_sheet('Weights')
-for i in range(0,len(Weight)-1):
-    ws.write(i,Weight[i])
-
-
-wb.save('output.xls')
+# Save weights to Excel && print results
+print(pd.DataFrame(Weight,Alts))
+pd.DataFrame(Weight,Alts).to_excel("output_" + timestampStr + '.xlsx', header=False)
