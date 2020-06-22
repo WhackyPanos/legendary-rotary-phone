@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 # List initiation
 oldanswrs = ["nothing old yet"]
@@ -12,7 +14,8 @@ agrmnt = False
 while agrmnt == False:
 
     # Importing the excel file.
-    data = pd.read_excel(r'C:\Users\Hristos Birbou\PycharmProjects\legendary-rotary-phone\Delphi\data.xlsx', index_col=0)
+    data = pd.read_excel(r'data.xlsx', index_col=0)
+    Alts = list(data.index)
 
     # Reading the rows an columns (determines how many questions and  how many participants we have).
     r, c = data.shape
@@ -65,3 +68,18 @@ print("--------------------The weights are--------------------")
 
 for i in range(r):
     print('Er', i, ': ', round(oldanswrs[i], 2), sep='')
+
+
+# Plot results
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.barh(Alts,oldanswrs)
+ax.set_ylabel('Criteria')
+ax.set_xlabel('Weights')
+
+# Get date+time for filename
+dateTimeObj = datetime.now()
+timestampStr = dateTimeObj.strftime("%d-%m-%Y_%H:%M:%S")
+
+# Save to png
+plt.savefig('plot_' + timestampStr + '.png',bbox_inches='tight')
