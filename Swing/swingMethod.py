@@ -32,9 +32,8 @@ print("Our Swing Matrix is:")
 print(SwingData)
 
 # Determine most valued criterion
-# TODO make it start from 1 and not from 0
 try:
-    choice = int(input("Please pick the criteria that you value most (Enter number 1,2,..): "))
+    choice = int(input("Please pick the criteria that you value most (Enter number 1,2,..): "))-1
 except ValueError:
     print("Error 100: NaN")
     sys.exit(100)
@@ -47,7 +46,8 @@ Value[choice] = 1
 for criterion in Criteria:
     if criterion != Criteria[choice]:
         try:
-            Value[Criteria.index(criterion)] = float(input("How much to you value " + criterion + " over " + Criteria[choice] + "? (Enter decimal from 0 to 1) "))
+            Value[Criteria.index(criterion)] = float(input("How much to you value " + criterion + " over " +
+                                                           Criteria[choice] + "? (Enter decimal from 0 to 1) "))
         except ValueError:
             print("Error 100: NaN")
             sys.exit(100)
@@ -61,10 +61,6 @@ Weight = []
 # Calculate weights
 for i in range(r):
     Weight.append(Value[i]*100/total)
-
-# TODO make it more pretty
-# TODO debug!
-print(Weight)
 
 # Plot results
 fig = plt.figure()
