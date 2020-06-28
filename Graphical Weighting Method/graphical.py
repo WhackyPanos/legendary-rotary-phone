@@ -6,7 +6,6 @@ from datetime import datetime
 Data = pd.read_excel(r'graphicalWeightingData.xlsx', index_col=False)
 Criteria = Data.iloc[:,0].tolist()
 
-
 # read graphical weights
 Values = []
 for criterion in Criteria:
@@ -22,7 +21,6 @@ for criterion in Criteria:
     Values.append(len(temp))
 
 # Normalize weights
-
 total =0
 for value in Values:
     total += value

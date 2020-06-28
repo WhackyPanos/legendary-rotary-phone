@@ -22,7 +22,8 @@ for x in Data.columns:
     Swings.append(Data[x].min())
 
 # Build swing's fictional alts
-Matrix = [[benchmark[i] for i in range(c)] for j in range(r)]
+Matrix = [[benchmark[i] for i in range(c)] for j in range(c)]
+
 for x in range(c):
     Matrix[x][x] = Swings[x]
 
