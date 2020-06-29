@@ -1,35 +1,98 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
 
-data = pd.read_excel (r'C:\Users\Hristos Birbou\PycharmProjects\legendary-rotary-phone\Delphi\data.xlsx',index_col=0)
+# List initiation
+oldanswrs = ["nothing old yet"]
+answrs = []
+pinakas_diaforon = ['There is no diversity yet']
 
-r, c = data.shape
-agrmnt = 0
+# Agreement check, if it's True the main loop stops.
+agrmnt = False
+
+# Main loop. This loop checks the data between rounds, if the data is similar the loop stops.
+while agrmnt == False:
+
+    # Importing the excel file.
+    data = pd.read_excel(r'data.xlsx', index_col=0)
+    Alts = list(data.index)
+
+    # Reading the rows an columns (determines how many questions and  how many participants we have).
+    r, c = data.shape
+
+    # Init of some variables.
+    diafora = 0
+    sumfonia = 0
+
+    # Analyzing data.
+    for i in range(r):
+        temp = 0
+        # Print the current question.
+        print("-------er", i+1, "-------", sep='')
+
+        for j in range(c):
+            # Print the answer of each user for the specific question.
+            print('user', j+1, ': ', data.iloc[i, j], sep='')
+            temp += data.iloc[i, j]
+
+        # Average of the answers.
+        motemp = temp / c
+        answrs.append(motemp)
+
+        if oldanswrs[0] != "nothing old yet":
+            diafora = oldanswrs[i] - answrs[i]
+            pinakas_diaforon.append(abs(round(diafora,2)))
+
+            if pinakas_diaforon[i] < 0.05:
+                sumfonia += 1
+
+
+    print('----------ANSWERS----------')
+    print('-The answers from this round are:', answrs)
+    print('-The answers from the previous round are:', oldanswrs)
+    print('-The diversity between the last two rounds is:', pinakas_diaforon)
+
+    oldanswrs.clear()
+    oldanswrs = answrs.copy()
+    answrs.clear()
+    pinakas_diaforon.clear()
+
+    if sumfonia == r:
+        agrmnt = True
+
+    else:
+        input('Press enter to continue...')
+
+
+print("--------------------The weights are--------------------")
+
+
+# Normalize weights
+total = 0
+for item in oldanswrs:
+    total += item
+
+Weights=[]
+for item in oldanswrs:
+    Weights.append(item/total)
 
 for i in range(r):
+    print('Er', i, ': ', round(Weights[i], 2), sep='')
 
-    votes = 0
-    print("er", i+1, ':', sep='')
 
-    for j in range(c):
-        #print("user",j+1,": ",data.iloc[i, j], sep='')
-        votes += int(data.iloc[i,j])
-    print("the positive votes are:", votes)
+# Plot results
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.barh(Alts,Weights)
+ax.set_ylabel('Criteria')
+ax.set_xlabel('Weights')
 
-    mo = votes / c
-    percent = (1 - mo)/1
-    print(percent)
+# Get date+time for filename
+dateTimeObj = datetime.now()
+timestampStr = dateTimeObj.strftime("%d-%m-%Y_%H:%M:%S")
 
-    if mo == 1 or mo == 0:
-        print("We have consensus")
-        agrmnt += 1
+# Save to png
+plt.savefig('plot_' + timestampStr + '.png',bbox_inches='tight')
 
-    elif percent > 0.8 or percent < 0.2 :
-        print("getting there")
-        agrmnt += 1
-
-agrmnt_percent = ((r - agrmnt)/r)*100
-if agrmnt == r:
-    print("Finished successfully")
-else:
-
-    print("Do again the survey and then run again the program because we had ", round(agrmnt_percent,1),"% agreement", sep='')
+#Save to excel
+pd.DataFrame(Weights,Alts).to_excel("output_" + timestampStr + '.xlsx', header=False)

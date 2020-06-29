@@ -1,0 +1,39 @@
+{
+
+  "criteria": 3,
+  "alternatives": 3,
+
+  "Alt1": [
+    {
+      "cost":2200,
+      "reliability":1,
+      "time":60
+    }
+  ],
+
+  "Alt2": [
+      {
+        "cost":2500,
+        "reliability":0,
+        "time":25
+      }
+    ],
+
+  "Alt3": [
+        {
+        "cost":3000,
+        "reliability":2,
+        "time":40
+        }
+      ],
+
+  "weight": [
+    {
+      "cost": 100,
+      "reliability": 40,
+      "time": 10
+    }
+  ]
+
+
+}
