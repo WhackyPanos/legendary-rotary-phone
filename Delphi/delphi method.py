@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
+# Threshold.
+katofli = float(input("Input threshold (0,05 suggested): "))
+
 # List initiation
 oldanswrs = ["nothing old yet"]
 answrs = []
@@ -39,11 +42,12 @@ while agrmnt == False:
         motemp = temp / c
         answrs.append(motemp)
 
+        # Exporting data to pinakas_diaforon and checking the agreement.
         if oldanswrs[0] != "nothing old yet":
             diafora = oldanswrs[i] - answrs[i]
             pinakas_diaforon.append(abs(round(diafora,2)))
 
-            if pinakas_diaforon[i] < 0.05:
+            if pinakas_diaforon[i] < katofli:
                 sumfonia += 1
 
 
